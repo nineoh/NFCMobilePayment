@@ -13,6 +13,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.util.Enumeration;
+import java.util.Objects;
 
 import ch.zhaw.wildlanfranchi.nfcmobilepayment.enrollment.EnrollmentActivity;
 import ch.zhaw.wildlanfranchi.nfcmobilepayment.services.KeyPairService;
@@ -26,35 +27,38 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: Fix this in KeyPairService
         // Check if enrollment has been made.
-//        try {
-//            Enumeration aliases = KeyPairService.getKeyStoreEntries();
-//
-//            boolean isEnrollmentCompleted = false;
-//            while (aliases.hasMoreElements()) {
-//                if (aliases.nextElement().toString() == getString(R.string.key_pair_alias)) {
-//                    isEnrollmentCompleted = true;
-//                    break;
-//                }
-//            }
+        try {
+            boolean isEnrollmentCompleted = android.os.Build.VERSION.SDK_INT < 19;
 
-//            if (!isEnrollmentCompleted) {
-//                Intent intent = new Intent(getApplicationContext(), EnrollmentActivity.class);
-//                startActivity(intent);
-//                return;
-//            }
+            if (android.os.Build.VERSION.SDK_INT >= 19) {
+                Enumeration aliases = KeyPairService.getKeyStoreEntries();
+
+                while (aliases.hasMoreElements()) {
+                    if (Objects.equals(aliases.nextElement().toString(), getString(R.string.key_pair_alias))) {
+                        isEnrollmentCompleted = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!isEnrollmentCompleted) {
+                Intent intent = new Intent(getApplicationContext(), EnrollmentActivity.class);
+                startActivity(intent);
+                return;
+            }
             Toast.makeText(getApplicationContext(), "Enrollment Key found :)", Toast.LENGTH_LONG).show();
 
             initializeEventHandlers();
 
-//        } catch (CertificateException e) {
-//            e.printStackTrace();
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (KeyStoreException e) {
-//            e.printStackTrace();
-//        }
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

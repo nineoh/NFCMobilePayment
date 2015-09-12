@@ -30,7 +30,6 @@ public class CommunicationActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_communication, menu);
         return true;
     }
 
@@ -75,10 +74,6 @@ public class CommunicationActivity extends AppCompatActivity {
                     }
                 }, this);
 
-//        //See if app got called by AndroidBeam intent.
-//        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-//            tvMessageToBeam.setText(NfcService.extractPayload(getIntent()));
-//        }
     }
 
 }

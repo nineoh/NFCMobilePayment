@@ -35,13 +35,17 @@ public class KeyPairService {
         String alias = applicationContext.getString(R.string.key_pair_alias);
 
         KeyPairGenerator kpGen = KeyPairGenerator.getInstance("RSA", "AndroidKeyStore");
-        kpGen.initialize(new KeyPairGeneratorSpec.Builder(applicationContext)
-                .setAlias(alias)
-                .setStartDate(now)
-                .setEndDate(end)
-                .setSerialNumber(BigInteger.valueOf(1))
-                .setSubject(new X500Principal("CN=test1"))
-                .build());
+
+        if (android.os.Build.VERSION.SDK_INT >= 18) {
+            kpGen.initialize(new KeyPairGeneratorSpec.Builder(applicationContext)
+                    .setAlias(alias)
+                    .setStartDate(now)
+                    .setEndDate(end)
+                    .setSerialNumber(BigInteger.valueOf(1))
+                    .setSubject(new X500Principal("CN=test1"))
+                    .build());
+        }
+
         return kpGen.generateKeyPair();
     }
 

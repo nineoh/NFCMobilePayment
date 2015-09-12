@@ -12,18 +12,6 @@ import java.nio.charset.Charset;
  * Created by Nino Lanfranchi on 12.08.15.
  */
 public class NfcService {
-//    /**
-//     * Parses the NDEF Message from the intent and returns it as String.
-//     */
-//    public static String processIntent(Intent intent) {
-//        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-//
-//        // only one message sent during the beam
-//        NdefMessage msg = (NdefMessage) rawMsgs[0];
-//
-//        // record 0 contains the MIME type, record 1 is the AAR, if present
-//        return new String(msg.getRecords()[0].getPayload());
-//    }
 
     public static NdefMessage createMessage(String text) {
         String mimeType = "application/ch.zhaw.wildlanfranchi.nfcmobilepayment";
@@ -51,5 +39,4 @@ public class NfcService {
 
         return payload;
     }
-
 }
